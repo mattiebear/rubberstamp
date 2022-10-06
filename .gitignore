@@ -1,0 +1,8 @@
+# Deps
+node_modules
+
+# Artifacts
+dist
+
+# Dev
+.vscode

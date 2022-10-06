@@ -33,25 +33,25 @@ export const <name> = () => {
 // templates/component/package.json.template
 
 {
-  "name": "component-<name>",
-  "main": "<name>.js"
+	"name": "component-<name>",
+	"main": "<name>.js"
 }
 ```
 
 Then, use the `stamp()` function to clone the templated directory and populate the files with the provided variables.
 
 ```ts
-import { stamp } from "rubberstamp";
+import { stamp } from 'rubberstamp';
 
-const name = "hello";
+const name = 'hello';
 
-const source = "/templates/utils";
+const source = '/templates/utils';
 const destination = `/my-utils/${name}`;
 
 const inject = { name };
 
 const copyTemplate = async () => {
-  await stamp({ source, destination, inject });
+	await stamp({ source, destination, inject });
 };
 ```
 
@@ -61,7 +61,7 @@ This will create modifed fields in the specified directory:
 // my-utils/hello.js
 
 export const hello = () => {
-  return console.log("Hola! My name is " + "hello");
+	return console.log('Hola! My name is ' + 'hello');
 };
 ```
 
@@ -69,8 +69,8 @@ export const hello = () => {
 // my-utils/package.json
 
 {
-  "name": "component-hello",
-  "main": "hello.js"
+	"name": "component-hello",
+	"main": "hello.js"
 }
 ```
 
@@ -98,10 +98,10 @@ When a file is populated with variable data it's often necessary to change the c
 
 ```ts
 const inject = {
-  name: "hello world",
-  nameCapital: "Hello World",
-  namePascal: "HelloWorld",
-  nameCamel: "helloWorld",
+	name: 'hello world',
+	nameCapital: 'Hello World',
+	namePascal: 'HelloWorld',
+	nameCamel: 'helloWorld',
 };
 ```
 

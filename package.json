@@ -1,0 +1,44 @@
+{
+	"name": "rubberstamp",
+	"version": "1.0.0",
+	"description": "Seamlessly generate template files with dynamic data.",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "./scripts/build.js",
+		"format": "prettier --write .",
+		"lint": "eslint --ext .ts src",
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mattiebear/rubberstamp.git"
+	},
+	"keywords": [
+		"template",
+		"clone",
+		"files",
+		"scaffold",
+		"node",
+		"cli",
+		"generate",
+		"inject",
+		"data"
+	],
+	"author": "Matthew Sells",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/mattiebear/rubberstamp/issues"
+	},
+	"homepage": "https://github.com/mattiebear/rubberstamp#readme",
+	"devDependencies": {
+		"@types/jest": "^29.1.1",
+		"@typescript-eslint/eslint-plugin": "^5.39.0",
+		"@typescript-eslint/parser": "^5.39.0",
+		"esbuild": "^0.15.10",
+		"eslint": "^8.24.0",
+		"jest": "^29.1.2",
+		"prettier": "^2.7.1",
+		"ts-jest": "^29.0.3",
+		"typescript": "^4.8.4"
+	}
+}
