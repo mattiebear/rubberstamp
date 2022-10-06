@@ -1,6 +1,6 @@
 {
 	"name": "rubberstamp",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Seamlessly generate template files with dynamic data.",
 	"main": "dist/index.js",
 	"scripts": {
