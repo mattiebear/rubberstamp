@@ -105,7 +105,7 @@ it('populates directory names with injected data', async () => {
 });
 
 it('mutates the case of file names', async () => {
-	vol.fromJSON(injectedStructure);
+	vol.fromJSON(caseStructure);
 
 	const inject = { name: 'happy badger' };
 
@@ -115,7 +115,7 @@ it('mutates the case of file names', async () => {
 });
 
 it('mutates the case of file contents', async () => {
-	vol.fromJSON(injectedStructure);
+	vol.fromJSON(caseStructure);
 
 	const inject = { name: 'happy badger' };
 
@@ -125,7 +125,7 @@ it('mutates the case of file contents', async () => {
 });
 
 it('mutates the case of directory names', async () => {
-	vol.fromJSON(injectedStructure);
+	vol.fromJSON(caseStructure);
 
 	const inject = { name: 'happy badger' };
 
