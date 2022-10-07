@@ -51,7 +51,7 @@ const destination = `/my-utils/${name}`;
 const inject = { name };
 
 const copyTemplate = async () => {
-	await stamp({ source, destination, inject });
+	await stamp(source, destination, { inject });
 };
 ```
 

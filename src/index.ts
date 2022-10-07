@@ -1,3 +1,3 @@
-export const hello = () => {
-	return 'hello';
-};
+import { clone } from './lib';
+
+export { clone as stamp };
