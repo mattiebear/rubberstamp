@@ -140,3 +140,8 @@ Valid case modifiers are
 | snake   | s     | hello_world |
 
 Note that both lower and upper case tokens are value, i.e. `__name$m__` and `__name$M__` are identical.
+
+## Upcoming Features
+
+- Callback functions
+- Custom transformations
