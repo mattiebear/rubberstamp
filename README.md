@@ -24,17 +24,17 @@ First, create template files in your source directory:
 ```js
 // templates/utils/__name__.js.template
 
-export const <name> = () => {
-	return console.log('Hello! My name is ' + '<name>');
-}
+export const __name__ = () => {
+	return console.log('Hello! My name is __name__');
+};
 ```
 
 ```json
 // templates/component/package.json.template
 
 {
-	"name": "component-<name>",
-	"main": "<name>.js"
+	"name": "component-__name__",
+	"main": "__name__.js"
 }
 ```
 
@@ -90,9 +90,7 @@ Super simple!
 
 You can alter the names of files and directories as well as the contents when injection tokens are included in either. To modify the name of a file or directory, include the format `__name__` in the filename. Rubberstamp will replace instances of `__name__` with the provided `{ name: 'value' }` entry provided in the injection object.
 
-Within files you can use `__name__` or the similar `<name>` syntax to denote injection points.
-
-## Case Modification
+## Case Transformations
 
 When a file is populated with variable data it's often necessary to change the case of the passed string variables. One way to do this is to declare multiple variables and pass them in the `inject` option:
 
@@ -112,8 +110,8 @@ This can be especially tedious with a large number of variables. Instead, Rubber
 
 import { React } from 'react';
 
-export const <name$P> = () => {
-	return <div>I am <name$T><div>
+export const __name$P__ = () => { // convert to PascalCase
+	return <div>I am __name$C__<div> // convert to Capital Case
 }
 ```
 
@@ -133,15 +131,17 @@ Valid case modifiers are
 
 | case    | token | example     |
 | ------- | ----- | ----------- |
-| camel   | m     | helloWorld  |
-| capital | c     | Hello World |
-| kebab   | k     | hello-world |
-| pascal  | p     | HelloWorld  |
-| snake   | s     | hello_world |
+| camel   | M     | helloWorld  |
+| capital | C     | Hello World |
+| kebab   | K     | hello-world |
+| pascal  | P     | HelloWorld  |
+| snake   | S     | hello_world |
 
 Note that both lower and upper case tokens are value, i.e. `__name$m__` and `__name$M__` are identical.
 
 ## Upcoming Features
 
+- Optimized directory and file creation
+- Synchornous `stamp()` call
 - Callback functions
 - Custom transformations

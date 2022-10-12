@@ -1,7 +1,6 @@
-import { Injection, InjectionValue } from '@/types';
+import { Injection } from '@/types';
 
-const toString = (value: InjectionValue): string =>
-	typeof value === 'number' ? value.toString() : value;
+import { getTransformer, toString } from './transform';
 
 export const injectData = (
 	source: string,
@@ -12,8 +11,11 @@ export const injectData = (
 	}
 
 	return Object.entries(data).reduce((acc, [key, value]) => {
-		return acc.replace(new RegExp(`(__${key}__|<${key}>)`, 'g'), () =>
-			toString(value)
+		return acc.replace(
+			new RegExp(`__(${key}(\\$[ckmpsCKMPS])?)__`, 'g'),
+			(...match) => {
+				return getTransformer(match[2])(toString(value));
+			}
 		);
 	}, source);
 };

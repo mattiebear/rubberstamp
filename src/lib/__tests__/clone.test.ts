@@ -24,9 +24,9 @@ const injectedStructure = {
 };
 
 const caseStructure = {
-	'./__name:p__.txt': 'bar',
-	'./foo.txt': '__name:p__',
-	'./__name:p__/foo.txt': 'boof',
+	'./__name$p__.txt': 'bar',
+	'./foo.txt': '__name$p__',
+	'./__name$p__/foo.txt': 'boof',
 };
 
 beforeEach(() => vol.reset());
