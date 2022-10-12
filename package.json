@@ -2,11 +2,17 @@
 	"name": "rubberstamp",
 	"version": "0.1.0",
 	"description": "Seamlessly generate template files with dynamic data.",
-	"main": "dist/index.js",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.esm.js",
+	"types": "dist/types/index.d.ts",
+	"files": [
+		"dist/**/*"
+	],
 	"scripts": {
-		"build": "./scripts/build.js",
+		"build": "./scripts/build.js && npx tsc",
 		"format": "prettier --write .",
 		"lint": "eslint --ext .ts src",
+		"prepublishOnly": "npm run build",
 		"test": "jest",
 		"test:coverage": "jest --collect-coverage",
 		"test:watch": "jest --watch"
