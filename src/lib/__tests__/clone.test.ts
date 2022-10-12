@@ -69,7 +69,7 @@ it('copies files to the new directories', async () => {
 });
 
 it('overwrites files if they already exist', async () => {
-	vol.fromJSON(existingStructure);
+	vol.fromJSON(existingStructure, '/test');
 
 	await clone('/test', '/tmp');
 
@@ -79,7 +79,7 @@ it('overwrites files if they already exist', async () => {
 });
 
 it('populates file names with injected data', async () => {
-	vol.fromJSON(injectedStructure);
+	vol.fromJSON(injectedStructure, '/test');
 
 	const inject = { name: 'armadillo' };
 
@@ -89,7 +89,7 @@ it('populates file names with injected data', async () => {
 });
 
 it('populates file contents with injected data', async () => {
-	vol.fromJSON(injectedStructure);
+	vol.fromJSON(injectedStructure, '/test');
 
 	const inject = { name: 'armadillo' };
 
@@ -99,7 +99,7 @@ it('populates file contents with injected data', async () => {
 });
 
 it('populates directory names with injected data', async () => {
-	vol.fromJSON(injectedStructure);
+	vol.fromJSON(injectedStructure, '/test');
 
 	const inject = { name: 'armadillo' };
 
@@ -109,7 +109,7 @@ it('populates directory names with injected data', async () => {
 });
 
 it('mutates the case of file names', async () => {
-	vol.fromJSON(caseStructure);
+	vol.fromJSON(caseStructure, '/test');
 
 	const inject = { name: 'happy badger' };
 
@@ -119,7 +119,7 @@ it('mutates the case of file names', async () => {
 });
 
 it('mutates the case of file contents', async () => {
-	vol.fromJSON(caseStructure);
+	vol.fromJSON(caseStructure, '/test');
 
 	const inject = { name: 'happy badger' };
 
@@ -129,7 +129,7 @@ it('mutates the case of file contents', async () => {
 });
 
 it('mutates the case of directory names', async () => {
-	vol.fromJSON(caseStructure);
+	vol.fromJSON(caseStructure, '/test');
 
 	const inject = { name: 'happy badger' };
 

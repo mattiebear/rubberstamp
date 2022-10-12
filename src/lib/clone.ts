@@ -1,7 +1,8 @@
-import { copyFile, lstat, mkdir, readdir, stat } from 'fs/promises';
+import { lstat, mkdir, readFile, readdir, stat, writeFile } from 'fs/promises';
 import path from 'path';
 
-export type Injection = Record<string, string | number>;
+import { injectData } from '@/lib/inject';
+import { Injection } from '@/types';
 
 export interface CloneConfig {
 	inject?: Injection;
@@ -10,7 +11,7 @@ export interface CloneConfig {
 export const clone = async (
 	source: string,
 	destination: string,
-	config: CloneConfig = {}
+	{ inject }: CloneConfig = {}
 ) => {
 	try {
 		await stat(destination);
@@ -21,14 +22,18 @@ export const clone = async (
 	const contents = await readdir(source);
 
 	for (const name of contents) {
-		const fullPath = path.join(source, name);
-		const targetPath = path.join(destination, name);
-		const stat = await lstat(fullPath);
+		const newName = injectData(name, inject);
+
+		const sourcePath = path.join(source, name);
+		const targetPath = path.join(destination, newName);
+		const stat = await lstat(sourcePath);
 
 		if (stat.isDirectory()) {
-			await clone(fullPath, targetPath);
+			await clone(sourcePath, targetPath);
 		} else {
-			await copyFile(fullPath, targetPath);
+			const contents = await readFile(sourcePath, { encoding: 'utf8' });
+			const injectedContents = injectData(contents, inject);
+			await writeFile(targetPath, injectedContents);
 		}
 	}
 };
