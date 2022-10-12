@@ -1,5 +1,5 @@
 {
-	"name": "rubberstamp",
+	"name": "@mattiebear/rubberstamp",
 	"version": "0.1.0",
 	"description": "Seamlessly generate template files with dynamic data.",
 	"main": "dist/index.cjs.js",
