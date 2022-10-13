@@ -22,7 +22,7 @@ export const clone = async (
 	const contents = await readdir(source);
 
 	for (const name of contents) {
-		const newName = injectData(name, inject);
+		const newName = injectData(name, inject).replace(/\.template$/, '');
 
 		const sourcePath = path.join(source, name);
 		const targetPath = path.join(destination, newName);
