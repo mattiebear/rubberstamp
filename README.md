@@ -26,7 +26,7 @@ npm i rubberstamp
 First, create template files in your source directory:
 
 ```js
-// templates/utils/__name__.js.template
+// templates/__name__.js.template
 
 export const __name__ = () => {
 	return console.log('Hello! My name is __name__');
@@ -34,7 +34,7 @@ export const __name__ = () => {
 ```
 
 ```json
-// templates/component/package.json.template
+// templates/package.json.template
 
 {
 	"name": "component-__name__",
@@ -49,8 +49,8 @@ import { stamp } from 'rubberstamp';
 
 const name = 'hello';
 
-const source = '/templates/utils';
-const destination = `/my-utils/${name}`;
+const source = '/templates';
+const destination = `/packages`;
 
 const inject = { name };
 
@@ -62,15 +62,15 @@ const copyTemplate = async () => {
 This will create modifed fields in the specified directory:
 
 ```js
-// my-utils/hello.js
+// packages/hello.js
 
 export const hello = () => {
-	return console.log('Hola! My name is ' + 'hello');
+	return console.log('Hola! My name is hello');
 };
 ```
 
 ```json
-// my-utils/package.json
+// packages/package.json
 
 {
 	"name": "component-hello",
@@ -94,6 +94,10 @@ Super simple!
 
 You can alter the names of files and directories as well as the contents when injection tokens are included in either. To modify the name of a file or directory, include the format `__name__` in the filename. Rubberstamp will replace instances of `__name__` with the provided `{ name: 'value' }` entry provided in the injection object.
 
+## File Names
+
+Note that you do not need to append `.template` to the end of file names but it is recommended so IDEs do not treat the files as syntactically invalid. Any `.template` suffix will be automatically removed from file names but are not required.
+
 ## Case Transformations
 
 When a file is populated with variable data it's often necessary to change the case of the passed string variables. One way to do this is to declare multiple variables and pass them in the `inject` option:
@@ -110,7 +114,7 @@ const inject = {
 This can be especially tedious with a large number of variables. Instead, Rubberstamp allows for case modifications within injection tokens. Simply include `$` and the case modifier after the token name.
 
 ```ts
-// templates/components/__name$K__.tsx.template
+// templates/__name$K__.tsx.template
 
 import { React } from 'react';
 
@@ -122,7 +126,7 @@ export const __name$P__ = () => { // convert to PascalCase
 Assuming the provided injections `{ name: 'my component' }` the file would be modified to the following:
 
 ```ts
-// my-files/components/my-component.tsx
+// packages/my-component.tsx
 
 import { React } from 'react';
 

@@ -29,6 +29,10 @@ const caseStructure = {
 	'./__name$p__/foo.txt': 'boof',
 };
 
+const templateStructure = {
+	'./__name__.txt.template': 'bar',
+};
+
 beforeEach(() => vol.reset());
 
 it('returns a promise', async () => {
@@ -136,4 +140,14 @@ it('mutates the case of directory names', async () => {
 	await clone('/test', '/tmp', { inject });
 
 	expect(fs.existsSync('/tmp/HappyBadger/foo.txt')).toBe(true);
+});
+
+it('removes .template from file names', async () => {
+	vol.fromJSON(templateStructure, '/test');
+
+	const inject = { name: 'foo' };
+
+	await clone('/test', '/tmp', { inject });
+
+	expect(fs.existsSync('/tmp/foo.txt')).toBe(true);
 });
