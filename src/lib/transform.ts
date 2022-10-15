@@ -1,11 +1,6 @@
 import { InjectionValue } from '@/types';
-import {
-	camelCase,
-	capitalCase,
-	noCase,
-	pascalCase,
-	snakeCase,
-} from 'change-case';
+
+import { Case, CaseTransformer } from './CaseTransformer';
 
 type CaseKeyLower = 'c' | 'k' | 'm' | 'p' | 's';
 
@@ -15,11 +10,11 @@ const isCaseKeyLowerType = (string: string): string is CaseKeyLower =>
 	/^[ckmps]$/.test(string);
 
 const CaseTransformers = {
-	c: capitalCase,
-	k: (string: string) => noCase(string).split(' ').join('-'),
-	m: camelCase,
-	p: pascalCase,
-	s: snakeCase,
+	c: Case.Capital,
+	k: Case.Kebab,
+	m: Case.Camel,
+	p: Case.Pascal,
+	s: Case.Snake,
 };
 
 export const getTransformer = (key: string) => {
@@ -30,7 +25,8 @@ export const getTransformer = (key: string) => {
 	const keyChar = key.replace(/^\$/, '').toLowerCase();
 
 	if (isCaseKeyLowerType(keyChar)) {
-		return CaseTransformers[keyChar];
+		return (string: string) =>
+			new CaseTransformer(string).toCase(CaseTransformers[keyChar]);
 	}
 
 	return noTransform;
