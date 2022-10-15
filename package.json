@@ -1,6 +1,10 @@
 {
 	"name": "@mattiebear/rubberstamp",
+<<<<<<< HEAD
 	"version": "0.2.4",
+=======
+	"version": "0.2.3",
+>>>>>>> 6754b61 (Release 0.2.3 (#12))
 	"description": "Seamlessly generate template files with dynamic data.",
 	"main": "dist/index.cjs.js",
 	"module": "dist/index.esm.js",
