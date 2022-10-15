@@ -6,6 +6,7 @@ dist
 
 # Dev
 .vscode
+.DS_Store
 
 # Coverage
 coverage
