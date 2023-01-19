@@ -33,6 +33,11 @@ const templateStructure = {
 	'./__name__.txt.template': 'bar',
 };
 
+const nestedStructure = {
+	'./__name$p__.txt': '__name$p__',
+	'./dir/__name$p__.txt': '__name$p__',
+};
+
 beforeEach(() => vol.reset());
 
 it('returns a promise', async () => {
@@ -150,4 +155,15 @@ it('removes .template from file names', async () => {
 	await clone('/test', '/tmp', { inject });
 
 	expect(fs.existsSync('/tmp/foo.txt')).toBe(true);
+});
+
+it('injects data through multiple levels', async () => {
+	vol.fromJSON(nestedStructure, '/test');
+
+	const inject = { name: 'foo' };
+
+	await clone('/test', '/tmp', { inject });
+
+	expect(fs.existsSync('/tmp/Foo.txt')).toBe(true);
+	expect(fs.existsSync('/tmp/dir/Foo.txt')).toBe(true);
 });

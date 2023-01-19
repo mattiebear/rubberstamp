@@ -29,7 +29,7 @@ export const clone = async (
 		const stat = await lstat(sourcePath);
 
 		if (stat.isDirectory()) {
-			await clone(sourcePath, targetPath);
+			await clone(sourcePath, targetPath, { inject });
 		} else {
 			const contents = await readFile(sourcePath, { encoding: 'utf8' });
 			const injectedContents = injectData(contents, inject);
