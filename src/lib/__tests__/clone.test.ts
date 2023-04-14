@@ -1,6 +1,6 @@
 import { fs, vol } from 'memfs';
 
-import { clone } from '../clone';
+import { clone, matcherFn } from '../clone';
 
 jest.mock('fs/promises');
 
@@ -8,6 +8,12 @@ const simpleStructure = {
 	'./foo.txt': 'bar',
 	'./bar/foo.txt': 'boof',
 	'./bar/baz/foo.txt': 'boop',
+};
+
+const ignoreStructure = {
+	'./foo.txt': 'bar',
+	'./bar/foo.txt': 'boof',
+	'./baz/bar.txt': 'floof',
 };
 
 const existingStructure = {
@@ -166,4 +172,44 @@ it('injects data through multiple levels', async () => {
 
 	expect(fs.existsSync('/tmp/Foo.txt')).toBe(true);
 	expect(fs.existsSync('/tmp/dir/Foo.txt')).toBe(true);
+});
+
+it.each(['foo'])('ignores specifed file patterns', async (pattern) => {
+	vol.fromJSON(ignoreStructure, '/test');
+
+	const result = clone('/test', '/tmp', { ignorePattern: pattern });
+
+	await result;
+
+	expect(fs.existsSync('/tmp/baz/bar.txt')).toBe(true);
+	expect(fs.existsSync('/tmp/foo.txt')).toBe(false);
+	expect(fs.existsSync('/tmp/bar/foo.txt')).toBe(false);
+});
+
+describe('matcherFn()', () => {
+	it('returns false if no matcher is provided', () => {
+		const matches = matcherFn();
+
+		expect(matches('')).toBe(false);
+		expect(matches('test')).toBe(false);
+	});
+
+	it.each([
+		['foo', 'foo', true],
+		['foo', 'bar', false],
+		['foo', /foo/, true],
+		['foo/bar', /bar/, true],
+		['foo/bar', ['baz'], false],
+		['foo/bar', ['bar'], true],
+		['foo/bar', [/bar/], true],
+		['foo/bar', [/flim/, 'flam'], false],
+		['foo/bar', [/flim/, 'flam', 'foo'], true],
+	])(
+		'returns true if no matcher is provided (%s, %p, %p)',
+		(name, pattern, expected) => {
+			const matches = matcherFn(pattern);
+
+			expect(matches(name)).toBe(expected);
+		}
+	);
 });
