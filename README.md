@@ -95,11 +95,12 @@ Super simple!
 
 `stamp()` accepts a single configuration object.
 
-| name          | required | description                                                                                                   |
-| ------------- | -------- | ------------------------------------------------------------------------------------------------------------- |
-| `source`      | yes      | The file path location of your template files. `stamp` will recursively transfer all files in this directory. |
-| `destination` | yes      | The location to which all files from `source` will be transferred while maintaining directory structure.      |
-| `inject`      | no       | An object of key value pairs denoting the variables to inject into file/directory names and content.          |
+| name            | required | type                                  | description                                                                                                                                            |
+| --------------- | -------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `source`        | yes      | string                                | The file path location of your template files. `stamp` will recursively transfer all files in this directory.                                          |
+| `destination`   | yes      | string                                | The location to which all files from `source` will be transferred while maintaining directory structure.                                               |
+| `inject`        | no       | Record<string, string>                | An object of key value pairs denoting the variables to inject into file/directory names and content.                                                   |
+| `ignorePattern` | no       | string, RegExp, Array<string, RegExp> | A single instance or a list of patterns to match against. If a file or directory matches this after injecting data into the name it will not be cloned |
 
 ## Variable Injection
 
