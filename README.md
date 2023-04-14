@@ -54,7 +54,7 @@ Then, use the `stamp()` function to clone the templated directory and populate t
 
 ```js
 // index.js
-import { stamp } from 'rubberstamp';
+import { stamp } from '@mattiebear/rubberstamp';
 
 const name = 'hello';
 
