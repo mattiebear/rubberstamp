@@ -2,8 +2,6 @@
 
 _Seamlessly generate template files with dynamic data._
 
-[![CI](https://github.com/mattiebear/rubberstamp/actions/workflows/ci.yml/badge.svg)](https://github.com/mattiebear/rubberstamp/actions/workflows/ci.yml)
-
 ---
 
 ## What is Rubberstamp?
