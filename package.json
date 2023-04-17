@@ -1,10 +1,6 @@
 {
 	"name": "@mattiebear/rubberstamp",
-<<<<<<< HEAD
 	"version": "0.2.4",
-=======
-	"version": "0.2.3",
->>>>>>> 6754b61 (Release 0.2.3 (#12))
 	"description": "Seamlessly generate template files with dynamic data.",
 	"main": "dist/index.cjs.js",
 	"module": "dist/index.esm.js",
@@ -24,6 +20,10 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mattiebear/rubberstamp.git"
+	},
+	"engines": {
+		"node": "^19.0.0",
+		"pnpm": "^8.0.0"
 	},
 	"keywords": [
 		"template",
