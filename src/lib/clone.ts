@@ -1,4 +1,12 @@
-import { lstat, mkdir, readFile, readdir, stat, writeFile } from 'fs/promises';
+import {
+	copyFile,
+	lstat,
+	mkdir,
+	readFile,
+	readdir,
+	stat,
+	writeFile,
+} from 'fs/promises';
 import path from 'path';
 
 import { injectData } from '@/lib/inject';
@@ -7,6 +15,7 @@ import { Injection } from '@/types';
 type Pattern = string | RegExp;
 
 export interface CloneConfig {
+	copyPattern?: Pattern | Pattern[];
 	ignorePattern?: Pattern | Pattern[];
 	inject?: Injection;
 }
@@ -27,7 +36,7 @@ export const matcherFn = (pattern?: Pattern | Pattern[]) => (name: string) => {
 export const clone = async (
 	source: string,
 	destination: string,
-	{ ignorePattern, inject }: CloneConfig = {}
+	{ copyPattern, ignorePattern, inject }: CloneConfig = {}
 ) => {
 	try {
 		await stat(destination);
@@ -35,14 +44,12 @@ export const clone = async (
 		mkdir(destination);
 	}
 
-	const matches = matcherFn(ignorePattern);
-
 	const contents = await readdir(source);
 
 	for (const name of contents) {
 		const newName = injectData(name, inject).replace(/\.template$/, '');
 
-		if (matches(newName)) {
+		if (matcherFn(ignorePattern)(newName)) {
 			continue;
 		}
 
@@ -53,9 +60,13 @@ export const clone = async (
 		if (stat.isDirectory()) {
 			await clone(sourcePath, targetPath, { ignorePattern, inject });
 		} else {
-			const contents = await readFile(sourcePath, { encoding: 'utf8' });
-			const injectedContents = injectData(contents, inject);
-			await writeFile(targetPath, injectedContents);
+			if (matcherFn(copyPattern)(newName)) {
+				await copyFile(sourcePath, targetPath);
+			} else {
+				const contents = await readFile(sourcePath, { encoding: 'utf8' });
+				const injectedContents = injectData(contents, inject);
+				await writeFile(targetPath, injectedContents);
+			}
 		}
 	}
 };

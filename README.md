@@ -95,12 +95,13 @@ Super simple!
 
 `stamp()` accepts a single configuration object.
 
-| name            | required | type                                  | description                                                                                                                                            |
-| --------------- | -------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `source`        | yes      | string                                | The file path location of your template files. `stamp` will recursively transfer all files in this directory.                                          |
-| `destination`   | yes      | string                                | The location to which all files from `source` will be transferred while maintaining directory structure.                                               |
-| `inject`        | no       | Record<string, string>                | An object of key value pairs denoting the variables to inject into file/directory names and content.                                                   |
-| `ignorePattern` | no       | string, RegExp, Array<string, RegExp> | A single instance or a list of patterns to match against. If a file or directory matches this after injecting data into the name it will not be cloned |
+| name            | required | type                                  | description                                                                                                   |
+| --------------- | -------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `source`        | yes      | string                                | The file path location of your template files. `stamp` will recursively transfer all files in this directory. |
+| `destination`   | yes      | string                                | The location to which all files from `source` will be transferred while maintaining directory structure.      |
+| `inject`        | no       | Record<string, string>                | An object of key value pairs denoting the variables to inject into file/directory names and content.          |
+| `copyPattern`   | no       | string, RegExp, Array<string, RegExp> | Pattern of files to copy directly                                                                             |
+| `ignorePattern` | no       | string, RegExp, Array<string, RegExp> | Pattern of files or directories to ignore from cloning                                                        |
 
 ## Variable Injection
 
@@ -159,9 +160,24 @@ Valid case modifiers are
 
 Note that both lower and upper case tokens are value, i.e. `__name$m__` and `__name$M__` are identical.
 
-## Upcoming Features
+## Ignoring Files and Directories
 
-- Optimized directory and file creation
-- Synchornous `stamp()` call
-- Callback functions
-- Custom transformations
+The `ignorePattern` config options allows you to pass in a list of strings or regular expressions that can be use to ignore a file or directory from cloning. If the resource is a directory any subdirectories or files within it will not be copied.
+
+```ts
+await stamp(source, destination, {
+	ignorePattern: ['node_moodules', new RegExp('ignore')],
+});
+```
+
+## Handling Asset Files
+
+By default a selection of files (ex images and audio) are expempt from the standard process of opening and re-writing the file contents to ensure file operability; the file extension is checked against a simple regex list. You can modify the check with the `copyPattern` config option. These files will be copied with the `copyFile` directive rather than `writeFile`. The default list can be accessed via the `copyPattern` import.
+
+```ts
+import { copyPattern } from '@mattiebear/rubberstamp';
+
+await stamp(source, destination, {
+	copyPattern: [...copyPattern, '.template', '.ogg'],
+});
+```
