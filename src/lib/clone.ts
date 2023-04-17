@@ -12,6 +12,8 @@ import path from 'path';
 import { injectData } from '@/lib/inject';
 import { Injection } from '@/types';
 
+import { copyPattern as defaultCopyPattern } from './constants';
+
 type Pattern = string | RegExp;
 
 export interface CloneConfig {
@@ -36,7 +38,7 @@ export const matcherFn = (pattern?: Pattern | Pattern[]) => (name: string) => {
 export const clone = async (
 	source: string,
 	destination: string,
-	{ copyPattern, ignorePattern, inject }: CloneConfig = {}
+	{ copyPattern = defaultCopyPattern, ignorePattern, inject }: CloneConfig = {}
 ) => {
 	try {
 		await stat(destination);

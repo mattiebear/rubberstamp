@@ -192,7 +192,7 @@ it.each(['foo'])('ignores specifed file patterns', async (pattern) => {
 	expect(fs.existsSync('/tmp/bar/foo.txt')).toBe(false);
 });
 
-it("creates the destination directory if it doesn't exist", async () => {
+it('copies files directly', async () => {
 	vol.fromJSON(imageStructure, '/test');
 
 	await clone('/test', '/tmp');
