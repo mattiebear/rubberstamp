@@ -21,10 +21,6 @@
 		"type": "git",
 		"url": "git+https://github.com/mattiebear/rubberstamp.git"
 	},
-	"engines": {
-		"node": "^19.0.0",
-		"pnpm": "^8.0.0"
-	},
 	"keywords": [
 		"template",
 		"clone",
