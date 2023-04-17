@@ -44,6 +44,12 @@ const nestedStructure = {
 	'./dir/__name$p__.txt': '__name$p__',
 };
 
+const imageStructure = {
+	'./foo.png': 'blob',
+	'./bar/foo.jpeg': 'blob',
+	'./baz/bar.txt': 'block',
+} as unknown as Record<string, string>;
+
 beforeEach(() => vol.reset());
 
 it('returns a promise', async () => {
@@ -184,6 +190,15 @@ it.each(['foo'])('ignores specifed file patterns', async (pattern) => {
 	expect(fs.existsSync('/tmp/baz/bar.txt')).toBe(true);
 	expect(fs.existsSync('/tmp/foo.txt')).toBe(false);
 	expect(fs.existsSync('/tmp/bar/foo.txt')).toBe(false);
+});
+
+it('copies files directly', async () => {
+	vol.fromJSON(imageStructure, '/test');
+
+	await clone('/test', '/tmp');
+
+	expect(fs.existsSync('/tmp/foo.png')).toBe(true);
+	expect(fs.existsSync('/tmp/bar/foo.jpeg')).toBe(true);
 });
 
 describe('matcherFn()', () => {
